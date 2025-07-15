@@ -3,6 +3,7 @@ import sys
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from config import model_name, system_prompt
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -25,8 +26,9 @@ messages = [
 ]
 
 response = client.models.generate_content(
-    model="gemini-2.0-flash-001",
+    model=model_name,
     contents=messages,
+    config=types.GenerateContentConfig(system_instruction=system_prompt),
 )
 
 print(response.text)
